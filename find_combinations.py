@@ -22,11 +22,12 @@ def method(item, arr, na=None):
         delta = i.departure - item.arrival
         x = datetime.timedelta(hours=4)
         y = datetime.timedelta(hours=1)
-        if y < delta < x and item.destination == i.source and item.source != i.destination and item.destination not in na:
-            na.append({"A": item.flight_number + item.destination, "B": i.flight_number + i.destination})
-            method(i, arr, na)
+        if y < delta < x and item.destination == i.source and item.source != i.destination:
+            x = [{"A": item.flight_number + item.destination, "B": i.flight_number + i.destination}]
+            na.append(x)
+            method(i, arr, x)
         else:
-            continue
+            pass
     return na
 
 
