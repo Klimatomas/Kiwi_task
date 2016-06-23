@@ -7,17 +7,16 @@ class Flight(object):
     def __init__(self, source, destination, departure, arrival, flight_number):
         self.source = source
         self.destination = destination
+        self.flight_number = flight_number.strip()
         try:
             self.departure = datetime.datetime.strptime(departure, '%Y-%m-%dT%H:%M:%S')
             self.arrival = datetime.datetime.strptime(arrival, '%Y-%m-%dT%H:%M:%S')
         except ValueError:
             sys.stderr.write("Wrong date format")
             quit()
-        self.flight_number = flight_number.strip()
 
-
-def __str__(self):
-    return '%s %s %s %s %s' % (self.source, self.destination, self.departure, self.arrival, self.flight_number)
+    def __str__(self):
+        return '%s %s %s' % (self.flight_number, self.source, self.destination)
 
 
 def combine(item, object_array, container):
@@ -26,8 +25,8 @@ def combine(item, object_array, container):
         latest = datetime.timedelta(hours=4)
         earliest = datetime.timedelta(hours=1)
         if earliest < delta < latest and item.destination == compare.source and item.source != compare.destination:
-            entry = [{'A': '%s %s' % (item.flight_number, item.destination),
-                      'B': '%s %s' % (compare.flight_number, compare.destination)}]
+            entry = [{'A': str(item),
+                      'B': str(compare)}]
             container.append(entry)
             combine(compare, object_array, entry)
 
